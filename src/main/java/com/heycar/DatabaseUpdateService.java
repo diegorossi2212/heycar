@@ -12,7 +12,6 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Locale;
 
 import javax.sql.DataSource;
 
@@ -29,9 +28,6 @@ import com.heycar.database.DatabaseUtil;
 public class DatabaseUpdateService {
 
     private static final Logger log = LogManager.getLogger(DatabaseUpdateService.class);
-
-    private static final String DATABASE_SEPARATOR = "^ *GO *$";
-    private static final String DATABASE_LINE_FEED = "\r\n";
 
     private static final int QUERY_INSERT_VERSION_COLUMN_INDEX_VERSION = 1;
     private static final int QUERY_INSERT_VERSION_COLUMN_INDEX_APPLIED_DATE = 2;
