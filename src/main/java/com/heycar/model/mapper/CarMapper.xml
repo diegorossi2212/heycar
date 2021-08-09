@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.heycar.model.mapper.CarMapper">
+
+    <insert id="insert" parameterType="Car">
+        INSERT INTO CAR (ID_DEALER, CODE, CAR_MAKE, MODEL, KW, CAR_YEAR, COLOR, PRICE)
+        VALUES (#{id_dealer}, #{code}, #{make}, #{model}, #{kw}, #{year}, #{color}, #{price});
+    </insert>
+
+    <select id="selectByUniqueKey" parameterType="Car" resultType="Car">
+        SELECT ID, ID_DEALER, CODE, CAR_MAKE MAKE, MODEL, KW, CAR_YEAR YEAR, COLOR, PRICE
+        WHERE ID_DEALER = #{idDealer} AND CODE = #{code} 
+    </select>
+
+    <select id="selectBySearch" parameterType="CarSearch" resultType="Car">
+        SELECT ID, ID_DEALER, CODE, CAR_MAKE MAKE, MODEL, KW, CAR_YEAR YEAR, COLOR, PRICE
+        FROM CAR
+        WHERE 1 = 1
+        <if test="search.idDealer != null">
+            AND ID_DEALER = #{search.idDealer}
+        </if>
+        <if test="search.code != null">
+            AND CODE = #{search.code}
+        </if>
+        <if test="search.make != null">
+            AND CAR_MAKE = #{search.make}
+        </if>
+        <if test="search.model != null">
+            AND MODEL = #{search.model}
+        </if>        
+        <if test="search.kw != null">
+            AND KW = #{search.kw}
+        </if>
+        <if test="search.year != null">
+            AND CAR_YEAR = #{search.year}
+        </if>        
+        <if test="search.color != null">
+            AND COLOR = #{search.color}
+        </if>                
+        <if test="search.price != null">
+            AND PRICE = #{search.price}
+        </if>                        
+        <if test="search.orderBy != null">
+            ORDER BY ${search.orderBy}
+            <if test="search.sortOrder != null">
+                ${search.sortOrder}
+            </if>
+            <if test="search.sortOrder == null">
+                ASC
+            </if>
+        </if>
+        <if test="search.start != null and search.length != null">
+            <if test="search.orderBy == null">
+                ORDER BY ID ASC
+            </if>
+            OFFSET ${search.start} ROWS FETCH NEXT ${search.length} ROWS ONLY
+        </if>
+    </select>
+
+    <update id="update" parameterType="Car">
+        UPDATE CAR SET CAR_MAKE = #{make}, MODEL = #{model}, KW = #{kw}, CAR_YEAR = #{year}, COLOR = #{color}, PRICE = #{price}         
+        WHERE ID = #{id} 
+    </update>
+
+</mapper>

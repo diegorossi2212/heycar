@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn">
+    
+    <Appenders>
+        <Console name="CONSOLE" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="%d [%t] %-5p %c - %m%n"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="org.springframework" level="INFO"/>
+        <Logger name="com.heycar" level="DEBUG"/>
+        <Root level="INFO">
+            <AppenderRef ref="CONSOLE"/>
+        </Root>
+    </Loggers>
+
+</Configuration>
