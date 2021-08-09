@@ -5,11 +5,12 @@
 
     <insert id="insert" parameterType="Car">
         INSERT INTO CAR (ID_DEALER, CODE, CAR_MAKE, MODEL, KW, CAR_YEAR, COLOR, PRICE)
-        VALUES (#{id_dealer}, #{code}, #{make}, #{model}, #{kw}, #{year}, #{color}, #{price});
+        VALUES (#{idDealer}, #{code}, #{make}, #{model}, #{kw}, #{year}, #{color}, #{price});
     </insert>
 
     <select id="selectByUniqueKey" parameterType="Car" resultType="Car">
         SELECT ID, ID_DEALER, CODE, CAR_MAKE MAKE, MODEL, KW, CAR_YEAR YEAR, COLOR, PRICE
+        FROM CAR
         WHERE ID_DEALER = #{idDealer} AND CODE = #{code} 
     </select>
 

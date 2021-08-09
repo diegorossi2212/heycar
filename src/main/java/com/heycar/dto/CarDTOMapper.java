@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.base.Splitter;
+import com.heycar.exception.ValidationException;
 import com.heycar.model.Car;
+import com.heycar.model.search.CarSearch;
 
 @Service
 public class CarDTOMapper {
@@ -23,7 +25,7 @@ public class CarDTOMapper {
 		car.setIdDealer(idDealer);
 		car.setCode(carDTO.getCode());
 		car.setColor(carDTO.getColor());
-		car.setKw(carDTO.getKw());
+		car.setKw(carDTO.getkW());
 		car.setMake(carDTO.getMake());
 		car.setModel(carDTO.getModel());
 		car.setPrice(carDTO.getPrice());
@@ -35,12 +37,23 @@ public class CarDTOMapper {
 		CarDTO carDto = new CarDTO();
 		carDto.setCode(car.getCode());
 		carDto.setColor(car.getColor());
-		carDto.setKw(car.getKw());
+		carDto.setkW(car.getKw());
 		carDto.setMake(car.getMake());
 		carDto.setModel(car.getModel());
 		carDto.setPrice(car.getPrice());
 		carDto.setYear(car.getYear());
 		return carDto;
+	}
+	
+	public CarSearch getCarSearch(String make, String model, Integer year, String color, Integer start, Integer length) {
+		CarSearch carSearch = new CarSearch();
+		carSearch.setMake(make);
+		carSearch.setModel(model);
+		carSearch.setYear(year);
+		carSearch.setColor(color);
+		carSearch.setStart(start == null ? 0 : start);
+		carSearch.setStart(length == null ? 0 : length);
+		return carSearch;
 	}
 
 	public List<CarDTO> getDtosFromCars(List<Car> cars){
@@ -61,7 +74,7 @@ public class CarDTOMapper {
 				if (StringUtils.isNotBlank(line)) {
 					List<String> carAttributes = Splitter.on(",").omitEmptyStrings().splitToList(line);
 					if (carAttributes.size() != 6) {
-						throw new IllegalArgumentException(line);
+						throw new ValidationException(List.of(line));
 					} else {
 						Car car = new Car();
 						car.setIdDealer(idDealer);

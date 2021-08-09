@@ -17,16 +17,16 @@ public class CarDTO {
 	private String model;
 
 	@NotNull
-	Integer kw;
+	private Integer kW;
 
 	@NotEmpty
-	String color;
+	private String color;
 
 	@NotNull
-	BigDecimal price;
+	private BigDecimal price;
 
 	@NotNull
-	Integer year;
+	private Integer year;
 
 	public String getCode() {
 		return code;
@@ -52,12 +52,12 @@ public class CarDTO {
 		this.model = model;
 	}
 
-	public Integer getKw() {
-		return kw;
+	public Integer getkW() {
+		return kW;
 	}
 
-	public void setKw(Integer kw) {
-		this.kw = kw;
+	public void setkW(Integer kW) {
+		this.kW = kW;
 	}
 
 	public String getColor() {

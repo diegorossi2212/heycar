@@ -35,7 +35,7 @@ public class MyBatisConfig {
 	}
 
 	@Bean
-	public MapperFactoryBean<DealerMapper> bankMapper(
+	public MapperFactoryBean<DealerMapper> dealerMapper(
 			@Qualifier("sqlSessionFactory") SqlSessionFactoryBean sqlSessionFactoryBean) throws Exception {
 		MapperFactoryBean<DealerMapper> factoryBean = new MapperFactoryBean<>(DealerMapper.class);
 		factoryBean.setSqlSessionFactory(sqlSessionFactoryBean.getObject());

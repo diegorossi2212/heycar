@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 public class CarSearch extends BaseSearch {
 
 	private Long idDealer;
+	private String code;
 	private String make;
 	private String model;
 	private Integer kw;
@@ -19,6 +20,14 @@ public class CarSearch extends BaseSearch {
 	public void setIdDealer(Long idDealer) {
 		this.idDealer = idDealer;
 	}
+	
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}	
 	
 	public String getMake() {
 		return make;

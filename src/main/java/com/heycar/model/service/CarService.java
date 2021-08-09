@@ -4,13 +4,12 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.heycar.dao.CarDAO;
 import com.heycar.dao.DealerDAO;
-import com.heycar.dto.CarDTO;
-import com.heycar.dto.CarDTOMapper;
 import com.heycar.model.Car;
 import com.heycar.model.Dealer;
 import com.heycar.model.search.CarSearch;
@@ -20,9 +19,11 @@ public class CarService {
 	
 	private static final Logger log = LogManager.getLogger(CarService.class);
 	
+	@Autowired
 	private CarDAO carDao;
+	
+	@Autowired
 	private DealerDAO dealerDAO;
-	private CarDTOMapper carDTOMapper;
 	
 	@Transactional
 	public void upsert(Long dealerId, List<Car> cars) {
@@ -51,12 +52,11 @@ public class CarService {
 		}
 		
 		log.info("upsert - END");
+		
 	}
 	
 	public List<Car> search(CarSearch carSearch){
 		return carDao.selectBySearch(carSearch);
 	}
 	
-	
-
 }

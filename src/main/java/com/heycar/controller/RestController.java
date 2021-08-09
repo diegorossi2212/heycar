@@ -36,9 +36,15 @@ public class RestController {
 	private CarDTOMapper carDTOMapper;
 
 	@GetMapping(path = "/cars", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<CarDTO> search(@RequestParam(required = false) CarSearch carSearch) {
+	public List<CarDTO> search(@RequestParam(required = false) String make, @RequestParam(required = false) String model, 
+			@RequestParam(required = false) Integer year, @RequestParam(required = false) String color, 
+			@RequestParam(required = false) Integer start, @RequestParam(required = false) Integer length) {
 		log.info("search - START");
-		return carDTOMapper.getDtosFromCars(carService.search(carSearch));	
+		CarSearch carSearch = carDTOMapper.getCarSearch(make, model, year, color, start, length);
+		log.info("search - SEARCH IS {}", carSearch);
+		List<CarDTO> cars =carDTOMapper.getDtosFromCars(carService.search(carSearch));	
+		log.info("search - WE FOUND {} CARS", cars.size());
+		return cars;
 	}
 
 	@PostMapping(value = "/listings/{dealerId}/")
@@ -50,9 +56,9 @@ public class RestController {
 		log.info("insert - END");
 	}
 
-	@PostMapping(value = "/csv_listings/{dealerId}/")
+	@PostMapping(value = "/listings/csv/{dealerId}/")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void insertViaCsv(@PathVariable(required = true) Long dealerId, @RequestParam("file") MultipartFile csv) throws IOException {
+	public void upsertViaCsv(@PathVariable(required = true) Long dealerId, @RequestParam("csv") MultipartFile csv) throws IOException {
 		log.info("insertViaCsv - START");		
 		List<Car> cars = carDTOMapper.getCarsFromCsv(dealerId, csv);
 		carService.upsert(dealerId, cars);		
