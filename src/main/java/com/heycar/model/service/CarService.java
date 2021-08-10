@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,13 +17,15 @@ import com.heycar.model.search.CarSearch;
 public class CarService {
 	
 	private static final Logger log = LogManager.getLogger(CarService.class);
-	
-	@Autowired
-	private CarDAO carDao;
-	
-	@Autowired
+
+	private CarDAO carDao;	
 	private DealerDAO dealerDAO;
 	
+	public CarService (CarDAO carDAO, DealerDAO dealerDAO) {
+		this.carDao = carDAO;
+		this.dealerDAO = dealerDAO;
+	}
+
 	@Transactional
 	public void upsert(Long dealerId, List<Car> cars) {
 		
@@ -43,10 +44,11 @@ public class CarService {
 		for(Car car: cars) {
 			Car existingCar = carDao.selectByUniqueKey(dealerId, car.getCode());			
 			if(existingCar == null) {
+				log.info("upsert - CAR DOES NOT EXIST - WILL BE INSERTED - {}", car);
 				carDao.insert(car);
 			}else {
-				log.info("upsert - CAR ALREADY EXIST - WILL BE UPDATED - {}", car);
 				car.setId(existingCar.getId());
+				log.info("upsert - CAR ALREADY EXIST - WILL BE UPDATED - {}", car);				
 				carDao.update(car);
 			}
 		}

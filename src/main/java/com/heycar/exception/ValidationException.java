@@ -2,6 +2,7 @@ package com.heycar.exception;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ValidationException extends RuntimeException {
 
@@ -18,9 +19,7 @@ public class ValidationException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        StringBuilder sb = new StringBuilder();
-        validationErrors.forEach(e -> sb.append(e).append(';'));
-        return sb.toString();
+    	return validationErrors.stream().collect(Collectors.joining(", "));
     }
 
 }

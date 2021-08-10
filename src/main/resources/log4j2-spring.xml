@@ -10,6 +10,7 @@
     <Loggers>
         <Logger name="org.springframework" level="INFO"/>
         <Logger name="com.heycar" level="DEBUG"/>
+        <Logger name="com.heycar.model.mapper" level="DEBUG"/>
         <Root level="INFO">
             <AppenderRef ref="CONSOLE"/>
         </Root>

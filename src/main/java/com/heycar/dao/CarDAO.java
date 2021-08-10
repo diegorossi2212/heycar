@@ -2,9 +2,6 @@ package com.heycar.dao;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.heycar.model.Car;
@@ -14,10 +11,12 @@ import com.heycar.model.search.CarSearch;
 @Repository
 public class CarDAO {
 
-    @Resource
-    @Qualifier("carMapper")
     private CarMapper carMapper;
 
+    public CarDAO (CarMapper carMapper) {
+    	this.carMapper = carMapper;
+    }
+    
     public List<Car> selectBySearch(CarSearch carSearch) {
     	return carMapper.selectBySearch(carSearch);
     }

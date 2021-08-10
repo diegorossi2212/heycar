@@ -9,8 +9,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.core.io.Resource;
 
-import com.heycar.database.DatabaseScript;
-
 public class DatabaseScriptComparator implements Comparator<Resource>, Serializable {
 
     @Serial
@@ -75,7 +73,6 @@ public class DatabaseScriptComparator implements Comparator<Resource>, Serializa
         if (StringUtils.isNoneBlank(firstScriptFilename, secondScriptFilename)) {
             DatabaseScript firstDatabaseScript = generateDatabaseScriptFromFilename(firstScriptFilename);
             DatabaseScript secondDatabaseScript = generateDatabaseScriptFromFilename(secondScriptFilename);
-
             result = compareDatabaseScripts(firstDatabaseScript, secondDatabaseScript);
         } else {
             log.warn("AT LEAST ONE RESOURCE IS NOT RELATED TO A FILE NAME");

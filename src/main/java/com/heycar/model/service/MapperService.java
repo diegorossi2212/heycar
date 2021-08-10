@@ -1,4 +1,4 @@
-package com.heycar.dto;
+package com.heycar.model.service;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,19 +7,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.base.Splitter;
+import com.heycar.dto.CarDTO;
 import com.heycar.exception.ValidationException;
 import com.heycar.model.Car;
 import com.heycar.model.search.CarSearch;
 
 @Service
-public class CarDTOMapper {
+public class MapperService {
 
+	private static final Logger log = LogManager.getLogger(MapperService.class);
+	
 	public Car getCarFromDto(Long idDealer, CarDTO carDTO) {
 		Car car = new Car();
 		car.setIdDealer(idDealer);
@@ -52,7 +58,7 @@ public class CarDTOMapper {
 		carSearch.setYear(year);
 		carSearch.setColor(color);
 		carSearch.setStart(start == null ? 0 : start);
-		carSearch.setStart(length == null ? 0 : length);
+		carSearch.setLength(length == null ? 20 : length);
 		return carSearch;
 	}
 
@@ -64,15 +70,19 @@ public class CarDTOMapper {
 		return dtos.stream().map(dto -> getCarFromDto(idDealer, dto)).collect(Collectors.toUnmodifiableList());
 	}	
 	
-	public List<Car> getCarsFromCsv(Long idDealer, MultipartFile file) throws IOException {
+	public List<Car> getCarsFromCsv(Long idDealer, MultipartFile file) {
 
 		try (InputStream is = file.getInputStream()) {
 			List<String> lines = IOUtils.readLines(file.getInputStream());
+			log.info("getCarsFromCsv - DEALER {} - THE CSV HAS {} LINES / CARS", idDealer, CollectionUtils.size(lines));
 			List<Car> cars = new ArrayList<>(lines.size());
+			Splitter csvCommaSplitter = Splitter.on(",");
+			lines.remove(0); // remove the header
 			for (String line : lines) {
 				StringUtils.trimToNull(line);
 				if (StringUtils.isNotBlank(line)) {
-					List<String> carAttributes = Splitter.on(",").omitEmptyStrings().splitToList(line);
+					List<String> carAttributes = csvCommaSplitter.splitToList(line);
+					log.info("getCarsFromCsv - DEALER {} - THE LINE {} HAS {} ATTRIBUTES", idDealer, line, CollectionUtils.size(carAttributes));
 					if (carAttributes.size() != 6) {
 						throw new ValidationException(List.of(line));
 					} else {
@@ -90,6 +100,9 @@ public class CarDTOMapper {
 				}
 			}
 			return cars;
+		}catch(IOException ioException) {
+			log.error("getCarsFromCsv, IOException", ioException);
+			throw new ValidationException(List.of("There was some problem in reading the csv multipart file"));
 		}
 
 	}
