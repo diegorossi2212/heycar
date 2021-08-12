@@ -1,8 +1,8 @@
-package com.heycar.model.search;
+package com.heycar.search;
 
 import java.util.List;
 
-import com.heycar.model.GSONUtil;
+import com.heycar.util.GSONUtil;
 
 public class BaseSearch {
 

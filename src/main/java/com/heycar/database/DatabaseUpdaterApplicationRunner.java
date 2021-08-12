@@ -1,4 +1,4 @@
-package com.heycar;
+package com.heycar.database;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

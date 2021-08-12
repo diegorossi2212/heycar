@@ -3,7 +3,7 @@ package com.heycar.dao;
 import org.springframework.stereotype.Repository;
 
 import com.heycar.model.Dealer;
-import com.heycar.model.mapper.DealerMapper;
+import com.heycar.mybatis.DealerMapper;
 
 @Repository
 public class DealerDAO {

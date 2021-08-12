@@ -1,5 +1,7 @@
 package com.heycar.model;
 
+import com.heycar.util.GSONUtil;
+
 public class BaseEntity {
 
     private Long id;

@@ -1,4 +1,4 @@
-package com.heycar.model;
+package com.heycar.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

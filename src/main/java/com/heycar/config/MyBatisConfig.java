@@ -9,14 +9,22 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.heycar.model.mapper.CarMapper;
-import com.heycar.model.mapper.DealerMapper;
+import com.heycar.mybatis.CarMapper;
+import com.heycar.mybatis.DealerMapper;
 
 @Configuration
+@EnableTransactionManagement
 public class MyBatisConfig {
 
-	private static final String PATH_MYBATIS_CONFIG_XML = "com/heycar/model/mapper/mybatis-config.xml";
+	private static final String PATH_MYBATIS_CONFIG_XML = "com/heycar/mybatis/mybatis-config.xml";
+	
+	@Bean
+	public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
+	    return new PersistenceExceptionTranslationPostProcessor();
+	}
 
 	@Bean("sqlSessionFactory")
 	public SqlSessionFactoryBean sqlSessionFactory(@Autowired DataSource dataSource) {

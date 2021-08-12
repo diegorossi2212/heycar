@@ -10,9 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.heycar.model.search.BaseSearch;
+import com.heycar.search.BaseSearch;
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;
 import com.tngtech.archunit.lang.ArchRule;
@@ -26,8 +27,8 @@ class TestArchitecture {
     private static final String PACKAGE_BASE = "com.heycar";
     private static final String PACKAGE_CONFIG = PACKAGE_BASE + ".config";
     private static final String PACKAGE_DAO = PACKAGE_BASE + ".dao";
-    private static final String PACKAGE_SEARCH = PACKAGE_BASE + ".model.search";
-    private static final String PACKAGE_MAPPER = PACKAGE_BASE + ".model.mapper";
+    private static final String PACKAGE_SEARCH = PACKAGE_BASE + ".search";
+    private static final String PACKAGE_MAPPER = PACKAGE_BASE + ".mapper";
     private static final String PACKAGE_REST_CONTROLLER = PACKAGE_BASE + ".controller";
     private static final String PACKAGE_SERVICE = PACKAGE_BASE + ".service" + PACKAGE_ANY;
 
@@ -252,7 +253,7 @@ class TestArchitecture {
 
         JavaClasses javaClasses = new ClassFileImporter().importPackages(PACKAGE_BASE);
 
-        ArchRule archRule = classes().that().resideInAPackage(PACKAGE_REST_CONTROLLER).should().beAnnotatedWith(RestController.class);
+        ArchRule archRule = classes().that().resideInAPackage(PACKAGE_REST_CONTROLLER).should().beAnnotatedWith(RestController.class).orShould().beAnnotatedWith(ControllerAdvice.class).orShould().beMemberClasses();
 
         archRule.check(javaClasses);
 

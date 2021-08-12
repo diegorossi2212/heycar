@@ -23,7 +23,7 @@ Of course in production we would need unique indexes (CAR.ID_DEALER + CAR.CODE) 
 * Data pagination is done in the simplest way using the offset / limit approach.
 You can find all the possible approaches at this link that we consider the gold standard for our REST interfaces: https://opensource.zalando.com/restful-api-guidelines/#pagination
 * I am using MyBatis just for a change (thanks to an excellent spring-mybatis bridge), I thought everybody else will be using JPA or Hibernate, this is just for showing that different approaches are possible.
-All the SQL is logged in DEBUG thanks to <Logger name="com.heycar.model.mapper" level="DEBUG"/>.
+All the SQL is logged in DEBUG thanks to com.heycar.mybatis package at DEBUG level.
 
 ## CSV Handling
 * We usually adopt opencsv or commons-csv, this use case is extremely simple, I did everything in a few lines in

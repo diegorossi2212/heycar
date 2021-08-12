@@ -19,9 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.heycar.dto.CarDTO;
 import com.heycar.model.Car;
-import com.heycar.model.search.CarSearch;
-import com.heycar.model.service.MapperService;
-import com.heycar.model.service.CarService;
+import com.heycar.search.CarSearch;
+import com.heycar.service.CarService;
+import com.heycar.service.TransformService;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
@@ -30,11 +30,11 @@ public class RestController {
 	
 	private CarService carService;
 		
-	private MapperService carDTOMapper;
+	private TransformService transformService;
 
-	public RestController(CarService carService, MapperService carDTOMapper) {
+	public RestController(CarService carService, TransformService carDTOMapper) {
 		this.carService = carService;
-		this.carDTOMapper = carDTOMapper;
+		this.transformService = carDTOMapper;
 	}
 	
 	@GetMapping(path = "/cars", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -42,9 +42,9 @@ public class RestController {
 			@RequestParam(required = false) Integer year, @RequestParam(required = false) String color, 
 			@RequestParam(required = false) Integer start, @RequestParam(required = false) Integer length) {
 		log.info("search - START");
-		CarSearch carSearch = carDTOMapper.getCarSearch(make, model, year, color, start, length);
+		CarSearch carSearch = transformService.getCarSearch(make, model, year, color, start, length);
 		log.info("search - SEARCH IS {}", carSearch);
-		List<CarDTO> cars =carDTOMapper.getDtosFromCars(carService.search(carSearch));	
+		List<CarDTO> cars =transformService.getDtosFromCars(carService.search(carSearch));	
 		log.info("search - WE FOUND {} CARS", CollectionUtils.size(cars));
 		return cars;
 	}
@@ -53,7 +53,7 @@ public class RestController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public void upsert(@PathVariable(required = true) Long dealerId, @Valid @RequestBody List<CarDTO> dtos) {
 		log.info("upsert - START");
-		List<Car> cars = carDTOMapper.getCarsFromDto(dealerId, dtos);
+		List<Car> cars = transformService.getCarsFromDto(dealerId, dtos);
 		carService.upsert(dealerId, cars);				
 		log.info("upsert - END");
 	}
@@ -62,7 +62,7 @@ public class RestController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public void upsertViaCsv(@PathVariable(required = true) Long dealerId, @RequestParam("csv") MultipartFile csv) {
 		log.info("upsertViaCsv - START");		
-		List<Car> cars = carDTOMapper.getCarsFromCsv(dealerId, csv);
+		List<Car> cars = transformService.getCarsFromCsv(dealerId, csv);
 		carService.upsert(dealerId, cars);		
 		log.info("upsertViaCsv - END");
 	}

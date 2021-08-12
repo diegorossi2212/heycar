@@ -1,4 +1,4 @@
-package com.heycar.model.service;
+package com.heycar.service;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,12 +19,12 @@ import com.google.common.base.Splitter;
 import com.heycar.dto.CarDTO;
 import com.heycar.exception.ValidationException;
 import com.heycar.model.Car;
-import com.heycar.model.search.CarSearch;
+import com.heycar.search.CarSearch;
 
 @Service
-public class MapperService {
+public class TransformService {
 
-	private static final Logger log = LogManager.getLogger(MapperService.class);
+	private static final Logger log = LogManager.getLogger(TransformService.class);
 	
 	public Car getCarFromDto(Long idDealer, CarDTO carDTO) {
 		Car car = new Car();
@@ -77,9 +77,8 @@ public class MapperService {
 			log.info("getCarsFromCsv - DEALER {} - THE CSV HAS {} LINES / CARS", idDealer, CollectionUtils.size(lines));
 			List<Car> cars = new ArrayList<>(lines.size());
 			Splitter csvCommaSplitter = Splitter.on(",");
-			lines.remove(0); // remove the header
-			for (String line : lines) {
-				StringUtils.trimToNull(line);
+			for (int i = 1; i < lines.size(); i++) {				
+				String line = StringUtils.trimToNull(lines.get(i));
 				if (StringUtils.isNotBlank(line)) {
 					List<String> carAttributes = csvCommaSplitter.splitToList(line);
 					log.info("getCarsFromCsv - DEALER {} - THE LINE {} HAS {} ATTRIBUTES", idDealer, line, CollectionUtils.size(carAttributes));

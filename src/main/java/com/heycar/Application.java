@@ -12,11 +12,9 @@ public class Application extends SpringBootServletInitializer {
 		SpringApplication.run(Application.class, args);
 	}
 
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application
-                .properties("spring.config.name:heycar-challenge")
-                .sources(Application.class);
-    }
-	
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.properties("spring.config.name:heycar-challenge").sources(Application.class);
+	}
+
 }

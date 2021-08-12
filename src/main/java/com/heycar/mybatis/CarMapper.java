@@ -1,11 +1,11 @@
-package com.heycar.model.mapper;
+package com.heycar.mybatis;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.heycar.model.Car;
-import com.heycar.model.search.CarSearch;
+import com.heycar.search.CarSearch;
 
 public interface CarMapper {
 

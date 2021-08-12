@@ -25,6 +25,7 @@
 		<java.version>15</java.version>
 		<springdoc-openapi-ui.version>1.5.9</springdoc-openapi-ui.version>
 		<mybatis-spring-boot-starter.version>2.2.0</mybatis-spring-boot-starter.version>
+		<commons-collections4.version>4.4</commons-collections4.version>
 	</properties>
 
 	<dependencies>
@@ -83,11 +84,12 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-collections4</artifactId>
-			<version>4.4</version>
+			<version>${commons-collections4.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
+			<version>1.4.200</version>
 			<scope>runtime</scope>
 		</dependency>
 		<!-- Test -->
@@ -114,7 +116,7 @@
 				<filtering>false</filtering>
 				<directory>src/main/java</directory>
 				<includes>
-					<include>**/com/heycar/model/mapper/*.xml</include>
+					<include>**/com/heycar/mybatis/*.xml</include>
 				</includes>
 			</resource>
 		</resources>

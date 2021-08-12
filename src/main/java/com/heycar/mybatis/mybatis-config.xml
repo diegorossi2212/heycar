@@ -14,7 +14,7 @@
 
 	<typeAliases>
 		<typeAlias alias="Car" type="com.heycar.model.Car" />
-		<typeAlias alias="CarSearch" type="com.heycar.model.search.CarSearch" />
+		<typeAlias alias="CarSearch" type="com.heycar.search.CarSearch" />
 
 		<typeAlias alias="Dealer" type="com.heycar.model.Dealer" />
 

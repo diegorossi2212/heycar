@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.heycar.model.Car;
-import com.heycar.model.mapper.CarMapper;
-import com.heycar.model.search.CarSearch;
+import com.heycar.mybatis.CarMapper;
+import com.heycar.search.CarSearch;
 
 @Repository
 public class CarDAO {

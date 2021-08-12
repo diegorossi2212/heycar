@@ -1,4 +1,4 @@
-package com.heycar.model.mapper;
+package com.heycar.mybatis;
 
 import com.heycar.model.Dealer;
 

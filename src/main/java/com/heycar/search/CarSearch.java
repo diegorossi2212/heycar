@@ -1,4 +1,4 @@
-package com.heycar.model.search;
+package com.heycar.search;
 
 import java.math.BigDecimal;
 

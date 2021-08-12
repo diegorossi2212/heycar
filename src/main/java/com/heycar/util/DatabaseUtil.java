@@ -1,4 +1,4 @@
-package com.heycar.database;
+package com.heycar.util;
 
 import java.sql.Connection;
 

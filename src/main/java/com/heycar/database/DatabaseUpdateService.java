@@ -1,4 +1,4 @@
-package com.heycar;
+package com.heycar.database;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -21,8 +21,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Service;
 
-import com.heycar.database.DatabaseScriptComparator;
-import com.heycar.database.DatabaseUtil;
+import com.heycar.util.DatabaseUtil;
 
 @Service
 public class DatabaseUpdateService {
@@ -118,7 +117,7 @@ public class DatabaseUpdateService {
 
             String line;
             while ((line = inputFile.readLine()) != null) {
-            	line.trim();
+            	line = line.trim();
                 if (line.isEmpty()) {
                     String command = removeLastSemicolon(stringBuilder.toString().trim());
 
@@ -134,14 +133,13 @@ public class DatabaseUpdateService {
 
             if (stringBuilder.length() > 0) {
                 String command = removeLastSemicolon(stringBuilder.toString().trim());
-
                 lastExecutedCommand = command;
                 executeCommand(connection, command);
             }
 
             connection.commit();
         } catch (Exception exception) {
-            com.heycar.database.DatabaseUtil.rollbackConnectionQuietly(connection);
+            com.heycar.util.DatabaseUtil.rollbackConnectionQuietly(connection);
 
             log.error("LAST EXECUTED COMMAND = {}", lastExecutedCommand, exception);
 

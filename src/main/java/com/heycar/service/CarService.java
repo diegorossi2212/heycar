@@ -1,7 +1,8 @@
-package com.heycar.model.service;
+package com.heycar.service;
 
 import java.util.List;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import com.heycar.dao.CarDAO;
 import com.heycar.dao.DealerDAO;
 import com.heycar.model.Car;
 import com.heycar.model.Dealer;
-import com.heycar.model.search.CarSearch;
+import com.heycar.search.CarSearch;
 
 @Service
 public class CarService {
@@ -29,7 +30,7 @@ public class CarService {
 	@Transactional
 	public void upsert(Long dealerId, List<Car> cars) {
 		
-		log.info("upsert - NUMBER OF CARS TO MANAGE = {}", cars);
+		log.info("upsert - NUMBER OF CARS TO MANAGE = {}", CollectionUtils.size(cars));
 		
 		Dealer dealer = dealerDAO.selectById(dealerId);
 		
